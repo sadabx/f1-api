@@ -2,7 +2,9 @@ import pandas as pd
 import requests
 import json
 import os
+import sys
 
+# Get current year dynamically so it never breaks on season transitions
 CURRENT_YEAR = "2026"
 
 def scrape_standings():
@@ -10,16 +12,15 @@ def scrape_standings():
     url = f"https://www.formula1.com/en/results.html/{CURRENT_YEAR}/drivers.html"
     
     try:
-        # Pandas magically grabs the HTML table from F1.com
         tables = pd.read_html(url)
+        if not tables:
+            raise ValueError("No tables found on the F1 standings page.")
         df = tables[0]
         
         standings_list = []
-        
         for index, row in df.iterrows():
-            # F1 formats names like "Max Verstappen VER". We need to split it for the UI.
             name_parts = str(row['Driver']).split(' ')
-            code = name_parts[-1] # The 3-letter code is always last
+            code = name_parts[-1]
             given_name = name_parts[0]
             family_name = " ".join(name_parts[1:-1])
             
@@ -34,7 +35,6 @@ def scrape_standings():
                 "Constructors": [{"name": str(row['Car'])}]
             })
 
-        # We wrap it in the exact Ergast/Jolpica structure so your app.js doesn't break!
         ergast_json = {
             "MRData": {
                 "StandingsTable": {
@@ -46,10 +46,11 @@ def scrape_standings():
         os.makedirs("api", exist_ok=True)
         with open("api/standings.json", "w", encoding="utf-8") as f:
             json.dump(ergast_json, f, indent=2)
-        print("✅ Standings updated instantly from Official F1 Site!")
+        print("✅ Standings updated successfully.")
 
     except Exception as e:
         print(f"❌ Failed to scrape standings: {e}")
+        raise e # Force the script to fail so GitHub workflow stops here
 
 def scrape_race_results():
     print("Scraping Official F1 Race Winners...")
@@ -57,17 +58,17 @@ def scrape_race_results():
     
     try:
         tables = pd.read_html(url)
+        if not tables:
+            raise ValueError("No tables found on the F1 race results page.")
         df = tables[0]
         
         races_list = []
-        
         for index, row in df.iterrows():
             name_parts = str(row['Winner']).split(' ')
             code = name_parts[-1]
             given_name = name_parts[0]
             family_name = " ".join(name_parts[1:-1])
 
-            # For the results tab, we just need the Grand Prix name and the winner
             races_list.append({
                 "raceName": str(row['Grand Prix']) + " Grand Prix",
                 "Results": [
@@ -90,22 +91,31 @@ def scrape_race_results():
             }
         }
 
+        os.makedirs("api", exist_ok=True)
         with open("api/results.json", "w", encoding="utf-8") as f:
             json.dump(ergast_json, f, indent=2)
-        print("✅ Race Results updated instantly from Official F1 Site!")
+        print("✅ Race Results updated successfully.")
 
     except Exception as e:
         print(f"❌ Failed to scrape results: {e}")
+        raise e
 
 if __name__ == "__main__":
-    scrape_standings()
-    scrape_race_results()
-    
-    # You can still fetch the 'current.json' calendar from Jolpica since schedules don't change!
     try:
-        cal = requests.get("https://api.jolpi.ca/ergast/f1/current.json").json()
-        with open("api/current.json", "w") as f:
-            json.dump(cal, f, indent=2)
-        print("✅ Calendar synced from Jolpica!")
-    except:
-        pass
+        scrape_standings()
+        scrape_race_results()
+        
+        # Sync calendar safely
+        print("Syncing Calendar from Jolpica...")
+        os.makedirs("api", exist_ok=True)
+        cal_res = requests.get("https://api.jolpi.ca/ergast/f1/current.json", timeout=15)
+        if cal_res.status_code == 200:
+            with open("api/current.json", "w", encoding="utf-8") as f:
+                json.dump(cal_res.json(), f, indent=2)
+            print("✅ Calendar synced.")
+        else:
+            print("⚠️ Jolpica calendar endpoint down, skipping calendar sync.")
+            
+    except Exception as main_error:
+        print(f"💥 Critical API build failure: {main_error}")
+        sys.exit(1) # Tell GitHub Actions that the compilation failed
