@@ -1,0 +1,320 @@
+{
+  "MRData": {
+    "StandingsTable": {
+      "StandingsLists": [
+        {
+          "DriverStandings": [
+            {
+              "position": "Kimi\u00a0AntonelliANT",
+              "points": "156",
+              "Driver": {
+                "givenName": "Kimi\u00a0AntonelliANT",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Mercedes"
+                }
+              ]
+            },
+            {
+              "position": "Lewis\u00a0HamiltonHAM",
+              "points": "115",
+              "Driver": {
+                "givenName": "Lewis\u00a0HamiltonHAM",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Ferrari"
+                }
+              ]
+            },
+            {
+              "position": "George\u00a0RussellRUS",
+              "points": "106",
+              "Driver": {
+                "givenName": "George\u00a0RussellRUS",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Mercedes"
+                }
+              ]
+            },
+            {
+              "position": "Charles\u00a0LeclercLEC",
+              "points": "75",
+              "Driver": {
+                "givenName": "Charles\u00a0LeclercLEC",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Ferrari"
+                }
+              ]
+            },
+            {
+              "position": "Lando\u00a0NorrisNOR",
+              "points": "73",
+              "Driver": {
+                "givenName": "Lando\u00a0NorrisNOR",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "McLaren"
+                }
+              ]
+            },
+            {
+              "position": "Oscar\u00a0PiastriPIA",
+              "points": "68",
+              "Driver": {
+                "givenName": "Oscar\u00a0PiastriPIA",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "McLaren"
+                }
+              ]
+            },
+            {
+              "position": "Max\u00a0VerstappenVER",
+              "points": "55",
+              "Driver": {
+                "givenName": "Max\u00a0VerstappenVER",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Red Bull Racing"
+                }
+              ]
+            },
+            {
+              "position": "Pierre\u00a0GaslyGAS",
+              "points": "41",
+              "Driver": {
+                "givenName": "Pierre\u00a0GaslyGAS",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Alpine"
+                }
+              ]
+            },
+            {
+              "position": "Isack\u00a0HadjarHAD",
+              "points": "34",
+              "Driver": {
+                "givenName": "Isack\u00a0HadjarHAD",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Red Bull Racing"
+                }
+              ]
+            },
+            {
+              "position": "Liam\u00a0LawsonLAW",
+              "points": "28",
+              "Driver": {
+                "givenName": "Liam\u00a0LawsonLAW",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Racing Bulls"
+                }
+              ]
+            },
+            {
+              "position": "Oliver\u00a0BearmanBEA",
+              "points": "18",
+              "Driver": {
+                "givenName": "Oliver\u00a0BearmanBEA",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Haas F1 Team"
+                }
+              ]
+            },
+            {
+              "position": "Franco\u00a0ColapintoCOL",
+              "points": "16",
+              "Driver": {
+                "givenName": "Franco\u00a0ColapintoCOL",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Alpine"
+                }
+              ]
+            },
+            {
+              "position": "Arvid\u00a0LindbladLIN",
+              "points": "13",
+              "Driver": {
+                "givenName": "Arvid\u00a0LindbladLIN",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Racing Bulls"
+                }
+              ]
+            },
+            {
+              "position": "Carlos\u00a0SainzSAI",
+              "points": "6",
+              "Driver": {
+                "givenName": "Carlos\u00a0SainzSAI",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Williams"
+                }
+              ]
+            },
+            {
+              "position": "Alexander\u00a0AlbonALB",
+              "points": "5",
+              "Driver": {
+                "givenName": "Alexander\u00a0AlbonALB",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Williams"
+                }
+              ]
+            },
+            {
+              "position": "Esteban\u00a0OconOCO",
+              "points": "3",
+              "Driver": {
+                "givenName": "Esteban\u00a0OconOCO",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Haas F1 Team"
+                }
+              ]
+            },
+            {
+              "position": "Gabriel\u00a0BortoletoBOR",
+              "points": "2",
+              "Driver": {
+                "givenName": "Gabriel\u00a0BortoletoBOR",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Audi"
+                }
+              ]
+            },
+            {
+              "position": "Fernando\u00a0AlonsoALO",
+              "points": "1",
+              "Driver": {
+                "givenName": "Fernando\u00a0AlonsoALO",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Aston Martin"
+                }
+              ]
+            },
+            {
+              "position": "Nico\u00a0HulkenbergHUL",
+              "points": "0",
+              "Driver": {
+                "givenName": "Nico\u00a0HulkenbergHUL",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Audi"
+                }
+              ]
+            },
+            {
+              "position": "Valtteri\u00a0BottasBOT",
+              "points": "0",
+              "Driver": {
+                "givenName": "Valtteri\u00a0BottasBOT",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Cadillac"
+                }
+              ]
+            },
+            {
+              "position": "Sergio\u00a0PerezPER",
+              "points": "0",
+              "Driver": {
+                "givenName": "Sergio\u00a0PerezPER",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Cadillac"
+                }
+              ]
+            },
+            {
+              "position": "Lance\u00a0StrollSTR",
+              "points": "0",
+              "Driver": {
+                "givenName": "Lance\u00a0StrollSTR",
+                "familyName": "",
+                "code": "UNK"
+              },
+              "Constructors": [
+                {
+                  "name": "Aston Martin"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
