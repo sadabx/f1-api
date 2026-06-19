@@ -1,9 +1,14 @@
-name: Update Free F1 API
+name: Update F1 API
 
 on:
+  push:
+    branches:
+      - main  # Triggers the action every time you push to the main branch
+    paths-ignore:
+      - 'api/**' # CRITICAL: Prevents an infinite loop when the bot pushes data!
   schedule:
-    - cron: '*/30 * * * *' # Runs every 30 minutes!
-  workflow_dispatch: 
+    - cron: '*/30 * * * *' # Still runs every 30 minutes automatically
+  workflow_dispatch: # Keeps the manual run button active
 
 jobs:
   update-api:
