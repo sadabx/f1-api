@@ -1,0 +1,33 @@
+name: Update Free F1 API
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Runs every 30 minutes!
+  workflow_dispatch: 
+
+jobs:
+  update-api:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      # Install Pandas, Requests, and lxml for HTML scraping
+      run: pip install requests pandas lxml bs4 html5lib
+
+    - name: Run API Fetcher
+      run: python update_api.py
+
+    - name: Commit and Push API Data
+      run: |
+        git config --global user.name "API Bot"
+        git config --global user.email "bot@github.com"
+        git add api/*.json
+        git commit -m "Automated API Update: Official F1 Site Scraped" || exit 0
+        git push
