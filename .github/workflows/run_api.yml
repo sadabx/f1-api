@@ -28,6 +28,8 @@ jobs:
       run: |
         git config --global user.name "API Bot"
         git config --global user.email "bot@github.com"
-        git add api/*.json
-        git commit -m "Automated API Update: Official F1 Site Scraped" || exit 0
+        # Create folder explicitly if it missed, preventing Git pathspec failures
+        mkdir -p api
+        git add api/
+        git commit -m "Automated API Update: Official F1 Site Scraped" || echo "No changes to commit"
         git push
