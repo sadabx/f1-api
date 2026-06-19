@@ -3,7 +3,8 @@ import requests
 import json
 import os
 import sys
-import re
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 CURRENT_YEAR = "2026"
 
@@ -16,7 +17,6 @@ def get_column_by_substring(df, substrings):
 
 def parse_driver_name(raw_name):
     name_parts = str(raw_name).strip().split(' ')
-    # Filter out empty strings if any weird spacing occurs
     name_parts = [p for p in name_parts if p]
     
     code = name_parts[-1] if len(name_parts) > 1 else "UNK"
@@ -76,55 +76,72 @@ def scrape_race_results():
     master_url = f"https://www.formula1.com/en/results.html/{CURRENT_YEAR}/races.html"
     
     try:
-        # 1. Grab the HTML directly to find the specific race links and internal IDs
-        html_content = requests.get(master_url, timeout=15).text
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        response = requests.get(master_url, headers=headers, timeout=15)
         
-        # F1 URLs look like: /en/results.html/2026/races/1234/australia/race-result.html
-        race_paths = re.findall(r'href="(/en/results\.html/\d{4}/races/\d+/[^/]+/race-result\.html)"', html_content)
-        # Drop duplicates while maintaining calendar order
+        # Parse the page with BeautifulSoup to find links safely
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        race_paths = []
+        for a in soup.find_all('a', href=True):
+            href = a['href']
+            # Target links that belong to race results or race-result pages
+            if f"/races/" in href and ("race-result" in href or "result.html" in href):
+                # Ensure we convert relative URLs to full absolute URLs
+                full_url = urljoin(master_url, href)
+                race_paths.append(full_url)
+                
+        # Deduplicate paths while preserving calendar sequence
         race_paths = list(dict.fromkeys(race_paths))
+        print(f"Found {len(race_paths)} individual race links to scan.")
         
         races_list = []
         
-        for path in race_paths:
-            detail_url = f"https://www.formula1.com{path}"
+        for detail_url in race_paths:
             print(f"-> Scraping podium details from: {detail_url}")
-            
-            detail_tables = pd.read_html(detail_url)
-            if not detail_tables:
-                continue
-            race_df = detail_tables[0]
-            
-            # Find relevant column placements
-            pos_idx = get_column_by_substring(race_df, ['pos', 'position']) or 1
-            driver_idx = get_column_by_substring(race_df, ['driver', 'name']) or 2
-            
-            # Dynamically determine the Grand Prix Name from the URL path
-            gp_slug = path.split('/')[-2].replace('-', ' ').title()
-            gp_name = gp_slug if "grand prix" in gp_slug.lower() else f"{gp_slug} Grand Prix"
-            # Clean up known casing anomalies (like Usa -> United States)
-            if "Usa" in gp_name: gp_name = gp_name.replace("Usa", "United States")
-            
-            podium_results = []
-            
-            # 2. Extract exactly the top 3 rows (P1, P2, P3)
-            for i in range(min(3, len(race_df))):
-                row = race_df.iloc[i]
-                given_name, family_name, code = parse_driver_name(row.iloc[driver_idx])
+            try:
+                detail_tables = pd.read_html(detail_url)
+                if not detail_tables:
+                    continue
+                race_df = detail_tables[0]
                 
-                podium_results.append({
-                    "position": str(row.iloc[pos_idx]),
-                    "Driver": {
-                        "givenName": given_name,
-                        "familyName": family_name,
-                        "code": code
-                    }
+                pos_idx = get_column_by_substring(race_df, ['pos', 'position']) or 1
+                driver_idx = get_column_by_substring(race_df, ['driver', 'name']) or 2
+                
+                # Deduce Grand Prix Name cleanly from URL segment structures
+                segments = detail_url.split('/')
+                # Find the segment right before race-result.html or fallback
+                slug_idx = -2 if segments[-1].endswith('.html') and 'race-result' in segments[-1] else -1
+                gp_slug = segments[slug_idx].replace('-', ' ').title()
+                
+                if not gp_slug or gp_slug.isdigit() or gp_slug.lower() in ['race result', 'race-result']:
+                    # Try previous segment if the last one was an ID or generic word
+                    gp_slug = segments[slug_idx - 1].replace('-', ' ').title()
+                
+                gp_name = gp_slug if "grand prix" in gp_slug.lower() else f"{gp_slug} Grand Prix"
+                if "Usa" in gp_name: gp_name = gp_name.replace("Usa", "United States")
+                
+                podium_results = []
+                for i in range(min(3, len(race_df))):
+                    row = race_df.iloc[i]
+                    given_name, family_name, code = parse_driver_name(row.iloc[driver_idx])
+                    
+                    podium_results.append({
+                        "position": str(row.iloc[pos_idx]),
+                        "Driver": {
+                            "givenName": given_name,
+                            "familyName": family_name,
+                            "code": code
+                        }
+                    })
+                    
+                races_list.append({
+                    "raceName": gp_name,
+                    "Results": podium_results
                 })
-                
-            races_list.append({
-                "raceName": gp_name,
-                "Results": podium_results
-            })
+            except Exception as item_err:
+                print(f"⚠️ Skipping row due to table error: {item_err}")
+                continue
 
         ergast_json = {
             "MRData": {
