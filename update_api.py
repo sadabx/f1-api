@@ -181,20 +181,34 @@ def scrape_race_results():
         raise e
 
 def generate_clean_calendar():
-    print("Generating Pristine 2026 Calendar...")
+    print("Generating Complete 2026 Calendar...")
     
-    # Official structure containing completely valid, verified session data
+    # Complete 24-Round Master Calendar Data Mapping for your Dashboard
     races_list = [
-        {"round": "1", "raceName": "Australian Grand Prix", "date": "2026-03-15", "time": "06:00:00Z", "Circuit": {"circuitName": "Albert Park Circuit"}},
-        {"round": "2", "raceName": "Chinese Grand Prix", "date": "2026-03-22", "time": "07:00:00Z", "Circuit": {"circuitName": "Shanghai International Circuit"}},
-        {"round": "3", "raceName": "Japanese Grand Prix", "date": "2026-04-05", "time": "05:00:00Z", "Circuit": {"circuitName": "Suzuka International Racing Course"}},
-        {"round": "4", "raceName": "Bahrain Grand Prix", "date": "2026-04-19", "time": "15:00:00Z", "Circuit": {"circuitName": "Bahrain International Circuit"}},
-        {"round": "5", "raceName": "Saudi Arabian Grand Prix", "date": "2026-04-26", "time": "17:00:00Z", "Circuit": {"circuitName": "Jeddah Corniche Circuit"}},
+        {"round": "1", "raceName": "Australian Grand Prix", "date": "2026-03-08", "time": "04:00:00Z", "Circuit": {"circuitName": "Albert Park Circuit"}},
+        {"round": "2", "raceName": "Chinese Grand Prix", "date": "2026-03-15", "time": "07:00:00Z", "Circuit": {"circuitName": "Shanghai International Circuit"}},
+        {"round": "3", "raceName": "Japanese Grand Prix", "date": "2026-03-29", "time": "05:00:00Z", "Circuit": {"circuitName": "Suzuka International Racing Course"}},
+        {"round": "4", "raceName": "Bahrain Grand Prix", "date": "2026-04-12", "time": "15:00:00Z", "Circuit": {"circuitName": "Bahrain International Circuit"}},
+        {"round": "5", "raceName": "Saudi Arabian Grand Prix", "date": "2026-04-19", "time": "17:00:00Z", "Circuit": {"circuitName": "Jeddah Corniche Circuit"}},
         {"round": "6", "raceName": "Miami Grand Prix", "date": "2026-05-03", "time": "20:00:00Z", "Circuit": {"circuitName": "Miami International Autodrome"}},
-        {"round": "7", "raceName": "Emilia Romagna Grand Prix", "date": "2026-05-17", "time": "13:00:00Z", "Circuit": {"circuitName": "Autodromo Enzo e Dino Ferrari"}},
-        {"round": "8", "raceName": "Monaco Grand Prix", "date": "2026-05-24", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Monaco"}},
-        {"round": "9", "raceName": "Spanish Grand Prix", "date": "2026-05-31", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Barcelona-Catalunya"}},
-        {"round": "10", "raceName": "Canadian Grand Prix", "date": "2026-06-14", "time": "18:00:00Z", "Circuit": {"circuitName": "Circuit Gilles-Villeneuve"}}
+        {"round": "7", "raceName": "Canadian Grand Prix", "date": "2026-05-24", "time": "18:00:00Z", "Circuit": {"circuitName": "Circuit Gilles-Villeneuve"}},
+        {"round": "8", "raceName": "Monaco Grand Prix", "date": "2026-06-07", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Monaco"}},
+        {"round": "9", "raceName": "Barcelona-Catalunya Grand Prix", "date": "2026-06-14", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Barcelona-Catalunya"}},
+        {"round": "10", "raceName": "Austrian Grand Prix", "date": "2026-06-28", "time": "13:00:00Z", "Circuit": {"circuitName": "Red Bull Ring"}},
+        {"round": "11", "raceName": "British Grand Prix", "date": "2026-07-05", "time": "14:00:00Z", "Circuit": {"circuitName": "Silverstone Circuit"}},
+        {"round": "12", "raceName": "Belgian Grand Prix", "date": "2026-07-19", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Spa-Francorchamps"}},
+        {"round": "13", "raceName": "Hungarian Grand Prix", "date": "2026-07-26", "time": "13:00:00Z", "Circuit": {"circuitName": "Hungaroring"}},
+        {"round": "14", "raceName": "Dutch Grand Prix", "date": "2026-08-23", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit Zandvoort"}},
+        {"round": "15", "raceName": "Italian Grand Prix", "date": "2026-09-06", "time": "13:00:00Z", "Circuit": {"circuitName": "Autodromo Nazionale Monza"}},
+        {"round": "16", "raceName": "Spanish Grand Prix", "date": "2026-09-13", "time": "13:00:00Z", "Circuit": {"circuitName": "Madrid Street Circuit"}},
+        {"round": "17", "raceName": "Azerbaijan Grand Prix", "date": "2026-09-26", "time": "11:00:00Z", "Circuit": {"circuitName": "Baku City Circuit"}},
+        {"round": "18", "raceName": "Singapore Grand Prix", "date": "2026-10-11", "time": "12:00:00Z", "Circuit": {"circuitName": "Marina Bay Street Circuit"}},
+        {"round": "19", "raceName": "United States Grand Prix", "date": "2026-10-25", "time": "19:00:00Z", "Circuit": {"circuitName": "Circuit of The Americas"}},
+        {"round": "20", "raceName": "Mexico City Grand Prix", "date": "2026-11-01", "time": "20:00:00Z", "Circuit": {"circuitName": "Autódromo Hermanos Rodríguez"}},
+        {"round": "21", "raceName": "São Paulo Grand Prix", "date": "2026-11-08", "time": "17:00:00Z", "Circuit": {"circuitName": "Autódromo José Carlos Pace"}},
+        {"round": "22", "raceName": "Las Vegas Grand Prix", "date": "2026-11-21", "time": "06:00:00Z", "Circuit": {"circuitName": "Las Vegas Strip Circuit"}},
+        {"round": "23", "raceName": "Qatar Grand Prix", "date": "2026-11-29", "time": "17:00:00Z", "Circuit": {"circuitName": "Lusail International Circuit"}},
+        {"round": "24", "raceName": "Abu Dhabi Grand Prix", "date": "2026-12-06", "time": "13:00:00Z", "Circuit": {"circuitName": "Yas Marina Circuit"}}
     ]
 
     ergast_json = {
@@ -205,6 +219,11 @@ def generate_clean_calendar():
             }
         }
     }
+
+    os.makedirs("api", exist_ok=True)
+    with open("api/current.json", "w", encoding="utf-8") as f:
+        json.dump(ergast_json, f, indent=2)
+    print("✅ Complete 24-Round Calendar setup finalized.")
 
     os.makedirs("api", exist_ok=True)
     with open("api/current.json", "w", encoding="utf-8") as f:
