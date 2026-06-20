@@ -3,7 +3,6 @@ import requests
 import json
 import os
 import sys
-import re
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
@@ -18,7 +17,7 @@ def get_column_by_substring(df, substrings):
     return None
 
 def parse_driver_name(raw_name):
-    """Cleans up name string anomalies and extracts given name, family name, and 3-letter code."""
+    """Cleans up clumpy or corrupted string spacing layouts from F1.com tables."""
     clean_name = str(raw_name).replace('\u00a0', ' ').strip()
     name_parts = clean_name.split(' ')
     name_parts = [p for p in name_parts if p]
@@ -30,7 +29,7 @@ def parse_driver_name(raw_name):
     given_name = name_parts[0]
     family_name = " ".join(name_parts[1:-1]) if len(name_parts) > 2 else (name_parts[1] if len(name_parts) == 2 else "")
     
-    # Separate clumped codes (e.g., "HamiltonHAM" -> HAM)
+    # If clumping happened without a space (e.g., "HamiltonHAM"), separate the 3-letter uppercase code
     if len(code) > 3 and code[-3:].isupper():
         actual_code = code[-3:]
         family_name = family_name + " " + code[:-3] if family_name else code[:-3]
@@ -97,7 +96,7 @@ def scrape_race_results():
         race_paths = []
         for a in soup.find_all('a', href=True):
             href = a['href']
-            # Strictly filter for current season URLs
+            # CRITICAL FIX: Ensure the link belongs EXCLUSIVELY to the current season year path
             if f"/{CURRENT_YEAR}/races/" in href and ("race-result" in href or "result.html" in href):
                 full_url = urljoin(master_url, href)
                 race_paths.append(full_url)
@@ -112,7 +111,7 @@ def scrape_race_results():
                 if not detail_tables:
                     continue
                 
-                # Scan for the actual classification table matching position '1'
+                # CRITICAL FIX: Find the actual classification table (the one where row 1 is position 1)
                 race_df = None
                 for table in detail_tables:
                     p_idx = get_column_by_substring(table, ['pos', 'position'])
@@ -142,7 +141,6 @@ def scrape_race_results():
                 if "Usa" in gp_name: gp_name = gp_name.replace("Usa", "United States")
                 
                 podium_results = []
-                # Explicitly slice the top 3 spots (Podium)
                 for i in range(min(3, len(race_df))):
                     row = race_df.iloc[i]
                     p_val = str(row.iloc[pos_idx]).strip()
@@ -167,7 +165,7 @@ def scrape_race_results():
                         "Results": podium_results
                     })
             except Exception as item_err:
-                print(f"⚠️ Skipping item table due to parsing error: {item_err}")
+                print(f"⚠️ Skipping item table processing mismatch: {item_err}")
                 continue
 
         ergast_json = {
@@ -188,7 +186,7 @@ def scrape_race_results():
         raise e
 
 def generate_clean_calendar():
-    print("Fetching Calendar from F1Calendar.com community source...")
+    print("Fetching Complete Session Calendar from F1Calendar.com...")
     url = f"https://raw.githubusercontent.com/sportstimes/f1/main/_db/f1/{CURRENT_YEAR}.json"
     
     try:
@@ -199,14 +197,27 @@ def generate_clean_calendar():
         data = response.json()
         races_list = []
         
+        # Helper function to parse ISO timestamps safely: "2026-03-08T04:00:00Z" -> {"date": "2026-03-08", "time": "04:00:00Z"}
+        def parse_session_time(timestamp):
+            if not timestamp:
+                return None
+            if 'T' in timestamp:
+                parts = timestamp.split('T')
+                return {"date": parts[0], "time": parts[1]}
+            return {"date": timestamp, "time": "00:00:00Z"}
+
         for index, item in enumerate(data.get("races", [])):
             sessions = item.get("sessions", {})
-            gp_time_raw = sessions.get("gp", "13:00:00Z")
             
-            # Map time bounds safely
-            gp_date = gp_time_raw.split('T')[0] if 'T' in gp_time_raw else item.get("date", "2026-01-01")
-            gp_time = gp_time_raw.split('T')[1] if 'T' in gp_time_raw else "13:00:00Z"
-            
+            # The Main Grand Prix Race time tracking
+            gp_time_raw = sessions.get("gp")
+            if gp_time_raw and 'T' in gp_time_raw:
+                gp_date = gp_time_raw.split('T')[0]
+                gp_time = gp_time_raw.split('T')[1]
+            else:
+                gp_date = item.get("date", "2026-01-01")
+                gp_time = "13:00:00Z"
+                
             race_obj = {
                 "round": str(item.get("round", index + 1)),
                 "raceName": item.get("name", "Grand Prix"),
@@ -215,11 +226,21 @@ def generate_clean_calendar():
                 "Circuit": { "circuitName": item.get("location", "Official Circuit") }
             }
             
-            # Parse session maps to match Ergast specification requirements
-            if "fp1" in sessions: 
-                race_obj["FirstPractice"] = {"date": sessions["fp1"].split('T')[0], "time": sessions["fp1"].split('T')[1] if 'T' in sessions["fp1"] else "00:00:00Z"}
-            if "qualifying" in sessions: 
-                race_obj["Qualifying"] = {"date": sessions["qualifying"].split('T')[0], "time": sessions["qualifying"].split('T')[1] if 'T' in sessions["qualifying"] else "00:00:00Z"}
+            # MAP EVERY SINGLE SESSION FOR COMPATIBILITY WITH YOUR APP.JS
+            if "fp1" in sessions:
+                race_obj["FirstPractice"] = parse_session_time(sessions["fp1"])
+            if "fp2" in sessions:
+                race_obj["SecondPractice"] = parse_session_time(sessions["fp2"])
+            if "fp3" in sessions:
+                race_obj["ThirdPractice"] = parse_session_time(sessions["fp3"])
+            if "sprintQualifying" in sessions:
+                race_obj["SprintQualifying"] = parse_session_time(sessions["sprintQualifying"])
+            elif "sprintShootout" in sessions: 
+                race_obj["SprintQualifying"] = parse_session_time(sessions["sprintShootout"])
+            if "sprint" in sessions:
+                race_obj["Sprint"] = parse_session_time(sessions["sprint"])
+            if "qualifying" in sessions:
+                race_obj["Qualifying"] = parse_session_time(sessions["qualifying"])
                 
             races_list.append(race_obj)
 
@@ -235,41 +256,11 @@ def generate_clean_calendar():
         os.makedirs("api", exist_ok=True)
         with open("api/current.json", "w", encoding="utf-8") as f:
             json.dump(ergast_json, f, indent=2)
-        print("✅ Calendar parsed from F1Calendar data stream smoothly.")
+        print("✅ Comprehensive multi-session calendar cached successfully.")
 
     except Exception as e:
-        print(f"⚠️ F1Calendar fetch failed ({e}). Initializing fallback map data structure...")
-        # Emergency master calendar backup fallback array configuration
-        backup_list = [
-            {"round": "1", "raceName": "Australian Grand Prix", "date": "2026-03-08", "time": "04:00:00Z", "Circuit": {"circuitName": "Albert Park Circuit"}},
-            {"round": "2", "raceName": "Chinese Grand Prix", "date": "2026-03-15", "time": "07:00:00Z", "Circuit": {"circuitName": "Shanghai International Circuit"}},
-            {"round": "3", "raceName": "Japanese Grand Prix", "date": "2026-03-29", "time": "05:00:00Z", "Circuit": {"circuitName": "Suzuka International Racing Course"}},
-            {"round": "4", "raceName": "Bahrain Grand Prix", "date": "2026-04-12", "time": "15:00:00Z", "Circuit": {"circuitName": "Bahrain International Circuit"}},
-            {"round": "5", "raceName": "Saudi Arabian Grand Prix", "date": "2026-04-19", "time": "17:00:00Z", "Circuit": {"circuitName": "Jeddah Corniche Circuit"}},
-            {"round": "6", "raceName": "Miami Grand Prix", "date": "2026-05-03", "time": "20:00:00Z", "Circuit": {"circuitName": "Miami International Autodrome"}},
-            {"round": "7", "raceName": "Canadian Grand Prix", "date": "2026-05-24", "time": "18:00:00Z", "Circuit": {"circuitName": "Circuit Gilles-Villeneuve"}},
-            {"round": "8", "raceName": "Monaco Grand Prix", "date": "2026-06-07", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Monaco"}},
-            {"round": "9", "raceName": "Barcelona-Catalunya Grand Prix", "date": "2026-06-14", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Barcelona-Catalunya"}},
-            {"round": "10", "raceName": "Austrian Grand Prix", "date": "2026-06-28", "time": "13:00:00Z", "Circuit": {"circuitName": "Red Bull Ring"}},
-            {"round": "11", "raceName": "British Grand Prix", "date": "2026-07-05", "time": "14:00:00Z", "Circuit": {"circuitName": "Silverstone Circuit"}},
-            {"round": "12", "raceName": "Belgian Grand Prix", "date": "2026-07-19", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit de Spa-Francorchamps"}},
-            {"round": "13", "raceName": "Hungarian Grand Prix", "date": "2026-07-26", "time": "13:00:00Z", "Circuit": {"circuitName": "Hungaroring"}},
-            {"round": "14", "raceName": "Dutch Grand Prix", "date": "2026-08-23", "time": "13:00:00Z", "Circuit": {"circuitName": "Circuit Zandvoort"}},
-            {"round": "15", "raceName": "Italian Grand Prix", "date": "2026-09-06", "time": "13:00:00Z", "Circuit": {"circuitName": "Autodromo Nazionale Monza"}},
-            {"round": "16", "raceName": "Spanish Grand Prix", "date": "2026-09-13", "time": "13:00:00Z", "Circuit": {"circuitName": "Madrid Street Circuit"}},
-            {"round": "17", "raceName": "Azerbaijan Grand Prix", "date": "2026-09-26", "time": "11:00:00Z", "Circuit": {"circuitName": "Baku City Circuit"}},
-            {"round": "18", "raceName": "Singapore Grand Prix", "date": "2026-10-11", "time": "12:00:00Z", "Circuit": {"circuitName": "Marina Bay Street Circuit"}},
-            {"round": "19", "raceName": "United States Grand Prix", "date": "2026-10-25", "time": "19:00:00Z", "Circuit": {"circuitName": "Circuit of The Americas"}},
-            {"round": "20", "raceName": "Mexico City Grand Prix", "date": "2026-11-01", "time": "20:00:00Z", "Circuit": {"circuitName": "Autódromo Hermanos Rodríguez"}},
-            {"round": "21", "raceName": "São Paulo Grand Prix", "date": "2026-11-08", "time": "17:00:00Z", "Circuit": {"circuitName": "Autódromo José Carlos Pace"}},
-            {"round": "22", "raceName": "Las Vegas Grand Prix", "date": "2026-11-21", "time": "06:00:00Z", "Circuit": {"circuitName": "Las Vegas Strip Circuit"}},
-            {"round": "23", "raceName": "Qatar Grand Prix", "date": "2026-11-29", "time": "17:00:00Z", "Circuit": {"circuitName": "Lusail International Circuit"}},
-            {"round": "24", "raceName": "Abu Dhabi Grand Prix", "date": "2026-12-06", "time": "13:00:00Z", "Circuit": {"circuitName": "Yas Marina Circuit"}}
-        ]
-        
-        ergast_json = { "MRData": { "RaceTable": { "season": CURRENT_YEAR, "Races": backup_list } } }
-        with open("api/current.json", "w", encoding="utf-8") as f:
-            json.dump(ergast_json, f, indent=2)
+        print(f"❌ Failed to parse all community sessions: {e}")
+        raise e
 
 if __name__ == "__main__":
     try:
