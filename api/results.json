@@ -3,35 +3,6 @@
     "RaceTable": {
       "Races": [
         {
-          "raceName": "Barcelona Catalunya Grand Prix",
-          "Results": [
-            {
-              "position": "44",
-              "Driver": {
-                "givenName": "Lewis",
-                "familyName": "HamiltonHAM Hamilton",
-                "code": "HAM"
-              }
-            },
-            {
-              "position": "63",
-              "Driver": {
-                "givenName": "George",
-                "familyName": "RussellRUS Russell",
-                "code": "RUS"
-              }
-            },
-            {
-              "position": "1",
-              "Driver": {
-                "givenName": "Lando",
-                "familyName": "NorrisNOR Norris",
-                "code": "NOR"
-              }
-            }
-          ]
-        },
-        {
           "raceName": "Australia Grand Prix",
           "Results": [
             {
@@ -201,6 +172,35 @@
                 "givenName": "Pierre",
                 "familyName": "GaslyGAS Gasly",
                 "code": "GAS"
+              }
+            }
+          ]
+        },
+        {
+          "raceName": "Barcelona Catalunya Grand Prix",
+          "Results": [
+            {
+              "position": "44",
+              "Driver": {
+                "givenName": "Lewis",
+                "familyName": "HamiltonHAM Hamilton",
+                "code": "HAM"
+              }
+            },
+            {
+              "position": "63",
+              "Driver": {
+                "givenName": "George",
+                "familyName": "RussellRUS Russell",
+                "code": "RUS"
+              }
+            },
+            {
+              "position": "1",
+              "Driver": {
+                "givenName": "Lando",
+                "familyName": "NorrisNOR Norris",
+                "code": "NOR"
               }
             }
           ]
