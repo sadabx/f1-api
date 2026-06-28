@@ -6,7 +6,7 @@
           "DriverStandings": [
             {
               "position": "Kimi\u00a0AntonelliANT",
-              "points": "156",
+              "points": "171",
               "Driver": {
                 "givenName": "Kimi",
                 "familyName": "AntonelliANT Antonelli",
@@ -19,22 +19,8 @@
               ]
             },
             {
-              "position": "Lewis\u00a0HamiltonHAM",
-              "points": "115",
-              "Driver": {
-                "givenName": "Lewis",
-                "familyName": "HamiltonHAM Hamilton",
-                "code": "HAM"
-              },
-              "Constructors": [
-                {
-                  "name": "Ferrari"
-                }
-              ]
-            },
-            {
               "position": "George\u00a0RussellRUS",
-              "points": "106",
+              "points": "131",
               "Driver": {
                 "givenName": "George",
                 "familyName": "RussellRUS Russell",
@@ -47,12 +33,12 @@
               ]
             },
             {
-              "position": "Charles\u00a0LeclercLEC",
-              "points": "75",
+              "position": "Lewis\u00a0HamiltonHAM",
+              "points": "125",
               "Driver": {
-                "givenName": "Charles",
-                "familyName": "LeclercLEC Leclerc",
-                "code": "LEC"
+                "givenName": "Lewis",
+                "familyName": "HamiltonHAM Hamilton",
+                "code": "HAM"
               },
               "Constructors": [
                 {
@@ -61,22 +47,8 @@
               ]
             },
             {
-              "position": "Lando\u00a0NorrisNOR",
-              "points": "73",
-              "Driver": {
-                "givenName": "Lando",
-                "familyName": "NorrisNOR Norris",
-                "code": "NOR"
-              },
-              "Constructors": [
-                {
-                  "name": "McLaren"
-                }
-              ]
-            },
-            {
               "position": "Oscar\u00a0PiastriPIA",
-              "points": "68",
+              "points": "80",
               "Driver": {
                 "givenName": "Oscar",
                 "familyName": "PiastriPIA Piastri",
@@ -89,12 +61,54 @@
               ]
             },
             {
+              "position": "Lando\u00a0NorrisNOR",
+              "points": "79",
+              "Driver": {
+                "givenName": "Lando",
+                "familyName": "NorrisNOR Norris",
+                "code": "NOR"
+              },
+              "Constructors": [
+                {
+                  "name": "McLaren"
+                }
+              ]
+            },
+            {
+              "position": "Charles\u00a0LeclercLEC",
+              "points": "79",
+              "Driver": {
+                "givenName": "Charles",
+                "familyName": "LeclercLEC Leclerc",
+                "code": "LEC"
+              },
+              "Constructors": [
+                {
+                  "name": "Ferrari"
+                }
+              ]
+            },
+            {
               "position": "Max\u00a0VerstappenVER",
-              "points": "55",
+              "points": "73",
               "Driver": {
                 "givenName": "Max",
                 "familyName": "VerstappenVER Verstappen",
                 "code": "VER"
+              },
+              "Constructors": [
+                {
+                  "name": "Red Bull Racing"
+                }
+              ]
+            },
+            {
+              "position": "Isack\u00a0HadjarHAD",
+              "points": "42",
+              "Driver": {
+                "givenName": "Isack",
+                "familyName": "HadjarHAD Hadjar",
+                "code": "HAD"
               },
               "Constructors": [
                 {
@@ -117,22 +131,8 @@
               ]
             },
             {
-              "position": "Isack\u00a0HadjarHAD",
-              "points": "34",
-              "Driver": {
-                "givenName": "Isack",
-                "familyName": "HadjarHAD Hadjar",
-                "code": "HAD"
-              },
-              "Constructors": [
-                {
-                  "name": "Red Bull Racing"
-                }
-              ]
-            },
-            {
               "position": "Liam\u00a0LawsonLAW",
-              "points": "28",
+              "points": "30",
               "Driver": {
                 "givenName": "Liam",
                 "familyName": "LawsonLAW Lawson",
@@ -174,7 +174,7 @@
             },
             {
               "position": "Arvid\u00a0LindbladLIN",
-              "points": "13",
+              "points": "14",
               "Driver": {
                 "givenName": "Arvid",
                 "familyName": "LindbladLIN Lindblad",
