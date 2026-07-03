@@ -3,35 +3,6 @@
     "RaceTable": {
       "Races": [
         {
-          "raceName": "Austria Grand Prix",
-          "Results": [
-            {
-              "position": "63",
-              "Driver": {
-                "givenName": "George",
-                "familyName": "RussellRUS Russell",
-                "code": "RUS"
-              }
-            },
-            {
-              "position": "3",
-              "Driver": {
-                "givenName": "Max",
-                "familyName": "VerstappenVER Verstappen",
-                "code": "VER"
-              }
-            },
-            {
-              "position": "12",
-              "Driver": {
-                "givenName": "Kimi",
-                "familyName": "AntonelliANT Antonelli",
-                "code": "ANT"
-              }
-            }
-          ]
-        },
-        {
           "raceName": "Australia Grand Prix",
           "Results": [
             {
@@ -230,6 +201,35 @@
                 "givenName": "Lando",
                 "familyName": "NorrisNOR Norris",
                 "code": "NOR"
+              }
+            }
+          ]
+        },
+        {
+          "raceName": "Austria Grand Prix",
+          "Results": [
+            {
+              "position": "63",
+              "Driver": {
+                "givenName": "George",
+                "familyName": "RussellRUS Russell",
+                "code": "RUS"
+              }
+            },
+            {
+              "position": "3",
+              "Driver": {
+                "givenName": "Max",
+                "familyName": "VerstappenVER Verstappen",
+                "code": "VER"
+              }
+            },
+            {
+              "position": "12",
+              "Driver": {
+                "givenName": "Kimi",
+                "familyName": "AntonelliANT Antonelli",
+                "code": "ANT"
               }
             }
           ]
