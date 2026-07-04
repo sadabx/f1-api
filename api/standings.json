@@ -6,7 +6,7 @@
           "DriverStandings": [
             {
               "position": "Kimi\u00a0AntonelliANT",
-              "points": "179",
+              "points": "171",
               "Driver": {
                 "givenName": "Kimi",
                 "familyName": "AntonelliANT Antonelli",
@@ -20,7 +20,7 @@
             },
             {
               "position": "George\u00a0RussellRUS",
-              "points": "136",
+              "points": "131",
               "Driver": {
                 "givenName": "George",
                 "familyName": "RussellRUS Russell",
@@ -34,7 +34,7 @@
             },
             {
               "position": "Lewis\u00a0HamiltonHAM",
-              "points": "132",
+              "points": "125",
               "Driver": {
                 "givenName": "Lewis",
                 "familyName": "HamiltonHAM Hamilton",
@@ -47,8 +47,22 @@
               ]
             },
             {
+              "position": "Oscar\u00a0PiastriPIA",
+              "points": "80",
+              "Driver": {
+                "givenName": "Oscar",
+                "familyName": "PiastriPIA Piastri",
+                "code": "PIA"
+              },
+              "Constructors": [
+                {
+                  "name": "McLaren"
+                }
+              ]
+            },
+            {
               "position": "Lando\u00a0NorrisNOR",
-              "points": "85",
+              "points": "79",
               "Driver": {
                 "givenName": "Lando",
                 "familyName": "NorrisNOR Norris",
@@ -62,7 +76,7 @@
             },
             {
               "position": "Charles\u00a0LeclercLEC",
-              "points": "83",
+              "points": "79",
               "Driver": {
                 "givenName": "Charles",
                 "familyName": "LeclercLEC Leclerc",
@@ -75,22 +89,8 @@
               ]
             },
             {
-              "position": "Oscar\u00a0PiastriPIA",
-              "points": "82",
-              "Driver": {
-                "givenName": "Oscar",
-                "familyName": "PiastriPIA Piastri",
-                "code": "PIA"
-              },
-              "Constructors": [
-                {
-                  "name": "McLaren"
-                }
-              ]
-            },
-            {
               "position": "Max\u00a0VerstappenVER",
-              "points": "76",
+              "points": "73",
               "Driver": {
                 "givenName": "Max",
                 "familyName": "VerstappenVER Verstappen",
@@ -132,7 +132,7 @@
             },
             {
               "position": "Liam\u00a0LawsonLAW",
-              "points": "31",
+              "points": "30",
               "Driver": {
                 "givenName": "Liam",
                 "familyName": "LawsonLAW Lawson",
