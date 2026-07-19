@@ -6,7 +6,7 @@
           "DriverStandings": [
             {
               "position": "Kimi\u00a0AntonelliANT",
-              "points": "179",
+              "points": "204",
               "Driver": {
                 "givenName": "Kimi",
                 "familyName": "AntonelliANT Antonelli",
@@ -15,6 +15,20 @@
               "Constructors": [
                 {
                   "name": "Mercedes"
+                }
+              ]
+            },
+            {
+              "position": "Lewis\u00a0HamiltonHAM",
+              "points": "159",
+              "Driver": {
+                "givenName": "Lewis",
+                "familyName": "HamiltonHAM Hamilton",
+                "code": "HAM"
+              },
+              "Constructors": [
+                {
+                  "name": "Ferrari"
                 }
               ]
             },
@@ -33,22 +47,8 @@
               ]
             },
             {
-              "position": "Lewis\u00a0HamiltonHAM",
-              "points": "147",
-              "Driver": {
-                "givenName": "Lewis",
-                "familyName": "HamiltonHAM Hamilton",
-                "code": "HAM"
-              },
-              "Constructors": [
-                {
-                  "name": "Ferrari"
-                }
-              ]
-            },
-            {
               "position": "Charles\u00a0LeclercLEC",
-              "points": "108",
+              "points": "126",
               "Driver": {
                 "givenName": "Charles",
                 "familyName": "LeclercLEC Leclerc",
@@ -62,7 +62,7 @@
             },
             {
               "position": "Lando\u00a0NorrisNOR",
-              "points": "97",
+              "points": "103",
               "Driver": {
                 "givenName": "Lando",
                 "familyName": "NorrisNOR Norris",
@@ -76,7 +76,7 @@
             },
             {
               "position": "Oscar\u00a0PiastriPIA",
-              "points": "82",
+              "points": "92",
               "Driver": {
                 "givenName": "Oscar",
                 "familyName": "PiastriPIA Piastri",
@@ -90,7 +90,7 @@
             },
             {
               "position": "Max\u00a0VerstappenVER",
-              "points": "76",
+              "points": "91",
               "Driver": {
                 "givenName": "Max",
                 "familyName": "VerstappenVER Verstappen",
@@ -104,7 +104,7 @@
             },
             {
               "position": "Isack\u00a0HadjarHAD",
-              "points": "52",
+              "points": "60",
               "Driver": {
                 "givenName": "Isack",
                 "familyName": "HadjarHAD Hadjar",
@@ -146,7 +146,7 @@
             },
             {
               "position": "Arvid\u00a0LindbladLIN",
-              "points": "20",
+              "points": "22",
               "Driver": {
                 "givenName": "Arvid",
                 "familyName": "LindbladLIN Lindblad",
@@ -155,6 +155,20 @@
               "Constructors": [
                 {
                   "name": "Racing Bulls"
+                }
+              ]
+            },
+            {
+              "position": "Franco\u00a0ColapintoCOL",
+              "points": "19",
+              "Driver": {
+                "givenName": "Franco",
+                "familyName": "ColapintoCOL Colapinto",
+                "code": "COL"
+              },
+              "Constructors": [
+                {
+                  "name": "Alpine"
                 }
               ]
             },
@@ -173,22 +187,8 @@
               ]
             },
             {
-              "position": "Franco\u00a0ColapintoCOL",
-              "points": "18",
-              "Driver": {
-                "givenName": "Franco",
-                "familyName": "ColapintoCOL Colapinto",
-                "code": "COL"
-              },
-              "Constructors": [
-                {
-                  "name": "Alpine"
-                }
-              ]
-            },
-            {
               "position": "Gabriel\u00a0BortoletoBOR",
-              "points": "6",
+              "points": "10",
               "Driver": {
                 "givenName": "Gabriel",
                 "familyName": "BortoletoBOR Bortoleto",
